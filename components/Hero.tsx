@@ -1,5 +1,6 @@
+import Image from "next/image";
+import bannerImg from "@/assets/banner.png";
 import { ArrowDown } from "lucide-react";
-
 export default function Hero() {
   return (
     <section className="bg-[#161a20] border border-white/10 rounded-2xl p-6 md:p-10 grid md:grid-cols-2 gap-8 items-center">
@@ -23,10 +24,13 @@ export default function Hero() {
         </a>
       </div>
 
-      <div className="flex justify-center">
-        <div className="w-full max-w-sm aspect-square rounded-xl bg-white/5 flex items-center justify-center text-gray-500 text-sm">
-          Hero image
-        </div>
+          <div className="flex justify-center">
+        <Image
+          src={bannerImg}
+          alt="Workout hero"
+          priority
+          className="w-full max-w-sm h-auto object-contain"
+        />
       </div>
     </section>
   );
