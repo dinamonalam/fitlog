@@ -38,7 +38,6 @@ export default function MyPlanPage() {
         Cap of five lifts for today. Finish them, then load more.
       </p>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#14161b] border border-white/10 rounded-xl p-5 mb-8">
         {stats.map((s, i) => (
           <div
@@ -57,7 +56,6 @@ export default function MyPlanPage() {
         ))}
       </div>
 
-      {/* Tabs + Sort */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div className="inline-flex bg-[#14161b] border border-white/10 rounded-lg p-1 text-xs">
           <button
@@ -98,7 +96,6 @@ export default function MyPlanPage() {
         </div>
       </div>
 
-      {/* Content */}
       {!loaded ? (
         <p className="text-center text-gray-400 py-20">Loading workouts…</p>
       ) : list.length === 0 ? (
@@ -151,17 +148,17 @@ function PlanItem({
 }) {
   return (
     <div
-      className={`flex flex-col sm:flex-row sm:items-center gap-4 bg-[#14161b] border border-white/10 rounded-xl p-3 ${
+      className={`flex flex-col sm:flex-row sm:items-center gap-4 bg-[#14161b] border border-white/10 rounded-2xl p-3 ${
         isDone ? "opacity-60" : ""
       }`}
     >
       <div className="flex items-center gap-4 flex-1 min-w-0">
-        <div className="relative w-24 h-16 shrink-0 rounded-md overflow-hidden">
+        <div className="relative w-28 h-[72px] shrink-0 rounded-lg overflow-hidden">
           <Image
             src={workout.image}
             alt={workout.name}
             fill
-            sizes="96px"
+            sizes="112px"
             className="object-cover"
           />
         </div>
@@ -173,7 +170,9 @@ function PlanItem({
           >
             {workout.name}
           </h3>
-          <p className="text-gray-500 text-[11px] mb-1">{workout.equipment}</p>
+          <p className="text-gray-500 text-[11px] mb-1.5">
+            {workout.equipment}
+          </p>
           <div className="flex items-center gap-3 text-[11px] text-gray-300">
             <span className="flex items-center gap-1">
               <Clock size={11} className="text-[#ccff00]" />
@@ -199,21 +198,23 @@ function PlanItem({
           View Details
         </Link>
         {showDone && (
-          <button
-            onClick={onDone}
-            className="inline-flex items-center gap-1.5 bg-[#ccff00] text-black text-xs font-semibold px-4 py-2 rounded-full hover:opacity-90 transition"
-          >
-            <Check size={14} />
-            {isDone ? "Done" : "Mark as Done"}
-          </button>
+          <>
+            <button
+              onClick={onDone}
+              className="inline-flex items-center gap-1.5 bg-[#ccff00] text-black text-xs font-semibold px-4 py-2 rounded-full hover:opacity-90 transition"
+            >
+              <Check size={14} />
+              {isDone ? "Done" : "Mark as Done"}
+            </button>
+            <button
+              onClick={onRemove}
+              aria-label="Remove"
+              className="border border-white/20 p-2 rounded-full hover:bg-white/10 transition"
+            >
+              <X size={14} />
+            </button>
+          </>
         )}
-        <button
-          onClick={onRemove}
-          aria-label="Remove"
-          className="border border-white/20 p-2 rounded-full hover:bg-white/10 transition"
-        >
-          <X size={14} />
-        </button>
       </div>
     </div>
   );
