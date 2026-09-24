@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Check, ChevronDown, Clock, Flame, Star, X } from "lucide-react";
@@ -10,10 +11,13 @@ import { Workout } from "@/lib/types";
 type Tab = "plan" | "saved";
 type SortKey = "duration" | "caloriesBurned" | "rating";
 
-export default function MyPlanPage() {
+function MyPlanContent() {
+  const searchParams = useSearchParams();
   const { plan, saved, done, loaded, removeFromPlan, removeFromSaved, markDone } =
     usePlan();
-  const [tab, setTab] = useState<Tab>("plan");
+  const [tab, setTab] = useState<Tab>(
+    searchParams.get("tab") === "saved" ? "saved" : "plan"
+  );
   const [sortBy, setSortBy] = useState<SortKey>("duration");
 
   const minutes = plan.reduce((sum, w) => sum + w.duration, 0);
@@ -130,6 +134,18 @@ export default function MyPlanPage() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function MyPlanPage() {
+  return (
+    <Suspense
+      fallback={
+        <p className="text-center text-gray-400 py-20">Loading workouts…</p>
+      }
+    >
+      <MyPlanContent />
+    </Suspense>
   );
 }
 
